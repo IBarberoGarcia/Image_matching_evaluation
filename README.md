@@ -1,6 +1,6 @@
 # Image_matching_evaluation
 
-Tools for evaluation of matches between images
+Tools for evaluation of matches between images.
 
 Contains two main functions:
 - Compute_error_fundamental_matrix
@@ -18,9 +18,9 @@ Both functions have the same input and output, homography should be used when th
 
 ## Output
 
-A results file with mean and maximum error
+A results file with mean and maximum error.
 
-## Examples:
+## Examples
 ```
 python compute_error_fundamental_matrix.py E:\Prueba_fm\ img1.jpg img2.jpg matches_SIFT_SIFT_img1_img2.txt matches_gt_img1_img2.txt 10
 
