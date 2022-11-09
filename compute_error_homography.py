@@ -83,7 +83,7 @@ def compute_errors_homography(folder, image1_name, image2_name, matches_filename
     h_matches, status = cv2.findHomography(pts1, pts2)
     
     #Get coordinates of transformed points
-    pts1_transformed = cv2.perspectiveTransform(pts1[None, :, :], h_matches)
+    pts1_transformed_gt = cv2.perspectiveTransform(pts1[None, :, :], h_gt)
     
     #Show images    
     image1_transformed = cv2.warpPerspective(image1, h_matches, (image2.shape[1],image2.shape[0]))
@@ -96,7 +96,7 @@ def compute_errors_homography(folder, image1_name, image2_name, matches_filename
     
     
     #Calculate error
-    error_x_y = pts1_transformed - pts2 #Get differences in x and y separately
+    error_x_y = pts1_transformed_gt - pts2 #Get differences in x and y separately
     error_distance = (error_x_y [0,:,0]**2 + error_x_y [0,:,1]**2)**0.5 #Get errors as distances between points
     max_error = np.max(abs(error_distance))
     num_pts_correct = np.count_nonzero(error_distance < threshold_correct)
