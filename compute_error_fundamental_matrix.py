@@ -49,20 +49,19 @@ def compute_errors_fundamental_matrix(folder, image1_name, image2_name, matches_
         pts_gt_1=np.array(pts_gt_1, dtype='float32')    
         pts_gt_2=np.array(pts_gt_2, dtype='float32') 
         h_gt, mask = cv2.findFundamentalMat(pts_gt_1,pts_gt_2,cv2.FM_LMEDS)
-    
-    elif gt_file.endswith('.h'): #GT as matrix
-        with open(gt_file) as file_name_1:
-            h_gt = np.loadtxt(file_name_1, delimiter=" ")
-            
-    lines1 = cv2.computeCorrespondEpilines(pts_gt_2.reshape(-1,1,2), 2, h_gt)
-    lines1 = lines1.reshape(-1,3)
-    error_gt = get_error(image1,image2,lines1,pts_gt_1,pts_gt_2)
-    
-    print('Error in Ground Truth points')
-    print('Mean error: ' + str(np.mean(error_gt)))
-    print('Maximum error: ' + str(np.max(error_gt)))        
+        lines1 = cv2.computeCorrespondEpilines(pts_gt_2.reshape(-1,1,2), 2, h_gt)
+        lines1 = lines1.reshape(-1,3)
+        error_gt = get_error(image1,image2,lines1,pts_gt_1,pts_gt_2)
         
-    
+        print('Error in Ground Truth points')
+        print('Mean error: ' + str(np.mean(error_gt)))
+        print('Maximum error: ' + str(np.max(error_gt)))    
+        
+    elif gt_filename.endswith('.h'): #GT as matrix
+        with open(folder + '/' + gt_filename,) as file_name_1:
+            h_gt = np.loadtxt(file_name_1, delimiter=" ")
+
+            
     '''CHECK ERRORS OF MATCHES'''
     
     matches_file = open(folder + '/' + matches_filename, 'r')
@@ -76,7 +75,6 @@ def compute_errors_fundamental_matrix(folder, image1_name, image2_name, matches_
     
     pts1=np.array(pts1, dtype='float32')    
     pts2=np.array(pts2, dtype='float32') 
-    
     
     # We select only inlier points
     # pts1 = pts1[mask.ravel()==1]
